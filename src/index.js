@@ -11,7 +11,7 @@ import Header from './components/Header/index'
 import ImagePath from './components/Header/HeaderImagePath.react'
 
 // these should be move to the configuration file
-const API_KEY = 'AIzaSyAmIP8fwTlIvIEuMO_Jm11es4i3vgVCgVg'
+const API_KEY = 'API Key'
 // Create a component with JSX that produce HTML
 
 class App extends Component {
