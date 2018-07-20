@@ -1,3 +1,6 @@
+const LiveReloadPlugin = require('webpack-livereload-plugin')
+const options = {
+}
 module.exports = {
   entry: ['./src/index.js'],
   output: {
@@ -6,25 +9,47 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['react', 'es2015', 'stage-1']
+        loader: 'babel-loader',
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/
+      },
+      {
+        use: ['style-loader', 'css-loader'],
+        test: /\.css$/
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              fallback: 'responsive-loader',
+              quality: 85,
+              mimetype: 'image/png'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg|eot|woff|ttf)$/,
+        use: [{
+          loader: 'file-loader'
+        }]
+      },
+      {
+        test: /\.svg/,
+        use: {
+          loader: 'svg-url-loader',
+          options: {}
         }
       }
     ]
   },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
-  },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: './',
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000
-    }
-  }
+  mode: 'development',
+  plugins: [
+    new LiveReloadPlugin(options)
+  ]
 }
